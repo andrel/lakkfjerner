@@ -1,5 +1,3 @@
-// git@github.com:andrel/lakkfjerner.git
-
 (function() {
 var cookieApi = chrome.cookies;
 var tabsApi = chrome.tabs;
