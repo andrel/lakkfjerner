@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Lakkfjerner",
+  "short_name": "Lakkfjerner",
   "description": "Fjerner betalingsmurer fra nettaviser.",
   "version": "1.0",
 
