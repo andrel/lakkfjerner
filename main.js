@@ -1,4 +1,4 @@
-(function(chrome, _) {
+var ext = function(chrome, _) {
   var cookieApi = chrome.cookies;
   var runtimeApi = chrome.runtime;
 
@@ -36,7 +36,7 @@
       });
     }
   }
-})(chrome, Utils)
+};
 
 var Utils = (function() {
 
