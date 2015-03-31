@@ -1,52 +1,64 @@
 var ext = function(chrome, _) {
-  var cookieApi = chrome.cookies;
-  var runtimeApi = chrome.runtime;
+    var cookieApi = chrome.cookies;
+    var runtimeApi = chrome.runtime;
 
-  // Register listeners.
-  cookieApi.onChanged.addListener(filterCookies);
-  runtimeApi.onStartup.addListener(removeCookiesOnce);
+    // Register listeners.
+    cookieApi.onChanged.addListener(filterCookies);
+    runtimeApi.onStartup.addListener(removeCookiesOnce);
+    chrome.tabs.onUpdated.addListener(tabUpdated);
 
-  function filterCookies(changeinfo) {
-    var cookie = changeinfo.cookie;
-    var cause = changeinfo.cause;
-    var cookie_removed = changeinfo.removed;
-
-    if (cause === 'evicted' || cause === 'expired') {
-      return;
-    } else {
-      attemptRemove(cookie);
+    function tabUpdated(tabId, changeinfo, tab) {
+	var urlRegex = /^https?:\/\/(?:[^\.]+\.)?aftenposten\.no/;
+	if (tab.url && tab.id) {
+	    if (urlRegex.test(tab.url)) {
+		chrome.pageAction.show(tabId);
+            }
+        }
     }
-  }
 
-  function removeCookiesOnce() {
-    cookieApi.getAll({domain: 'aftenposten.no'}, function(cookies) {
-      _.forEach(cookies, attemptRemove);
-    });
-  }
+    function filterCookies(changeinfo) {
+	var cookie = changeinfo.cookie;
+	var cause = changeinfo.cause;
+	var cookie_removed = changeinfo.removed;
 
-  function attemptRemove(cookie) {
-    if (/^VPW_Quota*/.test(cookie.name)) {
-      var toRemove = {
-        url: "http" + ((cookie.secure) ? 's' : '') + '://' + cookie.domain + cookie.path,
-        name: cookie.name
-    	};
-      cookieApi.remove(toRemove, function(details) {
-      console.assert(details != null, 'Could not remove cookie');
-      console.log('Blokkert kjeks! (' + details.storeId + ' / ' + details.name + ' / ' + details.url + ')');
-      });
+	if (cause === 'evicted' || cause === 'expired') {
+	    return;
+	} else {
+	    attemptRemove(cookie);
+	}
     }
-  }
+
+    function removeCookiesOnce() {
+	cookieApi.getAll({domain: 'aftenposten.no'}, function(cookies) {
+	    _.forEach(cookies, attemptRemove);
+	});
+    }
+
+    function attemptRemove(cookie) {
+	if (/^VPW_Quota*/.test(cookie.name)) {
+	    var toRemove = {
+		url: "http" + ((cookie.secure) ? 's' : '') + '://' + cookie.domain + cookie.path,
+		name: cookie.name
+	    };
+	    cookieApi.remove(toRemove, function(details) {
+		console.assert(details != null, 'Could not remove cookie');
+		console.log('Blokkert kjeks! (' + details.storeId + ' / ' + details.name + ' / ' + details.url + ')');
+	    });
+	}
+    }
 };
 
 var Utils = (function() {
 
-  var forEach = function(array, action) {
-    for (var i = 0; i < array.length; i++) {
-      action(array[i]);
+    var forEach = function(array, action) {
+	for (var i = 0; i < array.length; i++) {
+	    action(array[i]);
+	}
     }
-  }
 
-  return {
-    forEach: forEach
-  }
+    return {
+	forEach: forEach
+    }
 })();
+
+ext(chrome, Utils);
