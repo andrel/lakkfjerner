@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "background": {
-    "scripts": ["main.js"]
+    "scripts": ["src/app.js", "src/main.js"]
   },
 
   "page_action": {
@@ -16,13 +16,6 @@
     "default_title": "Aftenposten lakkfjerner",
     "default_popup": "popup.html"
   },
-/*
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html",
-    "default_title": "Click here!"
-  },
-*/
   "permissions": [
     "cookies",
     "*://*/*",
