@@ -53,17 +53,9 @@ module.exports = function (grunt) {
             }
         },
         karma: {
+            // See: https://github.com/obender/karma-grunt-jasmin-jquery-underscore-requirejs-example
             unit: {
-                options: {
-                    frameworks: ['jasmine'],
-                    singleRun: true,
-                    browsers: ['PhantomJS'],
-                    files: [
-//                        'public/components/angular/angular.js',
-//                        'public/components/angular-mocks/angular-mocks.js',
-                        'test/**/*-spec.js'
-                    ]
-                }
+                configFile: 'karma.conf.js'
             }
         }
     });
