@@ -51,6 +51,20 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        karma: {
+            unit: {
+                options: {
+                    frameworks: ['jasmine'],
+                    singleRun: true,
+                    browsers: ['PhantomJS'],
+                    files: [
+//                        'public/components/angular/angular.js',
+//                        'public/components/angular-mocks/angular-mocks.js',
+                        'test/**/*-spec.js'
+                    ]
+                }
+            }
         }
     });
 
@@ -60,6 +74,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-karma');
 
+    grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('default', ['jshint', 'uglify', 'copy', 'replace']);
 };
