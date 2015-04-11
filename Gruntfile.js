@@ -17,11 +17,17 @@ module.exports = function(grunt) {
 	    files: {
 		src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
 	    }
+	},
+	watch: {
+	    //files: ['<%= jshint.files %>'],
+	    files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+	    tasks: ['jshint']
 	}
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['jshint', 'uglify']);
 };
