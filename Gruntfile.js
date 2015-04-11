@@ -20,8 +20,8 @@ module.exports = function (grunt) {
         },
         watch: {
             //files: ['<%= jshint.files %>'],
-            files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-            tasks: ['jshint', 'copy']
+            files: ['Gruntfile.js', 'src/**/*', 'test/**/*.js'],
+            tasks: ['jshint', 'uglify', 'copy', 'replace']
         },
         clean: ['build'],
         copy: {
@@ -32,10 +32,24 @@ module.exports = function (grunt) {
                 src: ['**/*.html'],
                 dest: 'build/html'
             },
-            manifest: {
+            img: {
                 nonull: true,
-                src: ['manifest.json'],
+                expand: true,
+                cwd: 'src',
+                src: ['img/**/*.png'],
                 dest: 'build/'
+            }
+        },
+        replace: {
+            resources: {
+                src: ['src/manifest.json'],
+                dest: 'build/',
+                replacements: [
+                    {
+                        from: 'main.js',
+                        to: 'main.min.js'
+                    }
+                ]
             }
         }
     });
@@ -45,6 +59,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-text-replace');
 
-    grunt.registerTask('default', ['copy', 'jshint', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'uglify', 'copy', 'replace']);
 };
