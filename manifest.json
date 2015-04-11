@@ -14,7 +14,7 @@
       "19": "icon.png"
     },
     "default_title": "Aftenposten lakkfjerner",
-    "default_popup": "popup.html"
+    "default_popup": "build/html/popup.html"
   },
   "permissions": [
     "cookies",

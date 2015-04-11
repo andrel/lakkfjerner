@@ -21,15 +21,30 @@ module.exports = function (grunt) {
         watch: {
             //files: ['<%= jshint.files %>'],
             files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-            tasks: ['jshint']
+            tasks: ['jshint', 'copy']
         },
-        clean: ['build']
+        clean: ['build'],
+        copy: {
+            html: {
+                nonull: true,
+                expand: true,
+                cwd: 'src/html',
+                src: ['**/*.html'],
+                dest: 'build/html'
+            },
+            manifest: {
+                nonull: true,
+                src: ['manifest.json'],
+                dest: 'build/'
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['jshint', 'uglify']);
+    grunt.registerTask('default', ['copy', 'jshint', 'uglify']);
 };
