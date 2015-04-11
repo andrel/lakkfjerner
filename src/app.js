@@ -52,14 +52,13 @@
     };
 
     function attemptRemove(cookie) {
-        if (/^VPW_Quota*/.test(cookie.name)
-            && /^aftenposten\.no/.test(cookie.domain)) {
+        if (/^VPW_Quota*/.test(cookie.name) && /^aftenposten\.no/.test(cookie.domain)) {
             var toRemove = {
                 url: "http" + ((cookie.secure) ? 's' : '') + '://' + cookie.domain + cookie.path,
                 name: cookie.name
             };
             chrome_.cookies.remove(toRemove, function (details) {
-                console.assert(details != null, 'Could not remove cookie');
+                console.assert(details !== null, 'Could not remove cookie');
                 console.log('Blokkert kjeks! (' + details.storeId + ' / ' + details.name + ' / ' + details.url + ')');
             });
         }
