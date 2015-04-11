@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "background": {
-    "scripts": ["src/app.js", "src/main.js"]
+    "scripts": ["build/main.min.js"]
   },
 
   "page_action": {
