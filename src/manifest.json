@@ -3,7 +3,7 @@
   "name": "Lakkfjerner",
   "short_name": "Lakkfjerner",
   "description": "Fjerner betalingsmurer fra nettaviser.",
-  "version": "1.0",
+  "version": "1.0.1",
 
   "background": {
     "scripts": ["main.min.js"]
