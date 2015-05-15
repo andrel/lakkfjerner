@@ -24,6 +24,21 @@ module.exports = function (grunt) {
             tasks: ['jshint', 'uglify', 'copy', 'replace']
         },
         clean: ['build'],
+        compress: {
+            main: {
+                options: {
+                    archive: 'dist/lakkfjerner-extension.zip'
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build/',
+                        src: ['**/*'],
+                        dest: ''
+                    }
+                ]
+            }
+        },
         copy: {
             html: {
                 nonull: true,
@@ -64,10 +79,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('test', ['jshint', 'karma']);
     grunt.registerTask('default', ['jshint', 'uglify', 'copy', 'replace']);
+    grunt.registerTask('dist', ['default', 'compress']);
 };
